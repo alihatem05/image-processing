@@ -8,7 +8,11 @@ import time
 from itertools import permutations
 from collections import deque
 
+<<<<<<< HEAD
 BASE_OUTPUT = r"D:\Gam3a\Junior\Fall 25\Image\Gravity Falls"
+=======
+BASE_OUTPUT = r"e:\Studying\Fall 25\CSE381\Project\Gravity Falls"
+>>>>>>> 7aabc83 (Updating Readme file and Adding the dataset and output)
 
 OUT_IMG = os.path.join(BASE_OUTPUT, "final_output")
 OUT_ASSEMBLED = os.path.join(BASE_OUTPUT, "assembled")

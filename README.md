@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # **README — Image Preprocessing and Tiling Pipeline**
 
 ## **1. Overview**
@@ -103,3 +104,231 @@ Overall, the output is stable, predictable, and suitable for both machine-learni
 
 ## **6. Important Note**
 Since the Dataset folder is too large to push, we removed it. Please add the dataset folder in the same dir as preprossing.py.
+=======
+# Gravity Falls
+
+## Course Information
+
+* **Course**: CSE483 / CESS5004 – Computer Vision
+* **Faculty**: Engineering, Ain Shams University
+* **Semester**: Fall 2025
+* **Project Type**: Course Project (Milestone 1 & Milestone 2)
+
+---
+
+## Project Overview
+
+This project implements a **fully classical computer vision pipeline** to automatically process, analyze, and assemble jigsaw puzzle images. The system takes complete puzzle images, preprocesses them, segments them into tiles, extracts edge features, matches neighboring pieces, and reconstructs the original image layout.
+
+No machine learning or deep learning techniques are used. All steps rely strictly on **image processing, geometry, and heuristic optimization**, in compliance with course rules.
+
+The project supports puzzles of sizes:
+
+* **2×2**
+* **4×4**
+* **8×8**
+
+---
+
+## Objectives
+
+1. Design a robust preprocessing pipeline to enhance puzzle edges.
+2. Segment puzzle images into individual pieces.
+3. Extract edge descriptors for each puzzle piece.
+4. Compute compatibility scores between neighboring edges.
+5. Assemble puzzles automatically using edge matching and heuristic search.
+6. Evaluate reconstruction accuracy against ground-truth images.
+7. Visualize intermediate and final results clearly.
+
+---
+
+## Project Structure
+
+```
+Gravity Falls/
+│
+├── dataset/
+│   └── Gravity Falls/
+│       ├── puzzle_2x2/
+│       ├── puzzle_4x4/
+│       ├── puzzle_8x8/
+│       └── correct/
+│
+├── final_output/          # Segmented puzzle pieces (Phase 1 output)
+│   ├── puzzle_2x2/
+│   ├── puzzle_4x4/
+│   └── puzzle_8x8/
+│
+├── preprocess/            # Saved preprocessing steps
+│   ├── 2x2/
+│   ├── 4x4/
+│   └── 8x8/
+│
+├── assembled/             # Final assembled images
+│   ├── 2x2/
+│   ├── 4x4/
+│   └── 8x8/
+│
+├── visualizations/        # Visual comparison figures
+│
+├── Phase1.py              # Preprocessing & segmentation
+├── 2x2.py                 # 2×2 puzzle solver (brute force)
+├── 4x4.py                 # 4×4 puzzle solver (heuristic)
+├── 8x8.py                 # 8×8 puzzle solver (heuristic)
+├── Compare.py             # Accuracy evaluation
+├── visualizations.py      # Visualization and reporting
+└── README.md
+```
+
+---
+
+## Phase 1: Preprocessing & Segmentation
+
+**File:** `Phase1.py`
+
+### Steps Performed
+
+1. **Grayscale conversion** – simplifies intensity analysis.
+2. **Gaussian blur** – suppresses noise while preserving edges.
+3. **Laplacian enhancement** – strengthens edge responses.
+4. **Uniform grid slicing** – splits the image into equal-sized tiles.
+
+Each input image is divided according to its grid size (2×2, 4×4, or 8×8), and all pieces are saved individually with consistent naming.
+
+Preprocessing outputs are stored for inspection and debugging.
+
+---
+
+## Edge Feature Extraction
+
+For every puzzle piece, the system extracts **four borders** (top, right, bottom, left).
+
+Each border is represented using a multi-channel descriptor composed of:
+
+* LAB color values
+* Gradient magnitude (Sobel)
+* Gradient direction
+* Laplacian response
+
+Borders are normalized to reduce illumination bias and resized to ensure consistent comparison.
+
+---
+
+## Edge Compatibility Measurement
+
+To determine how well two edges fit together, a custom distance metric is used:
+
+* Lp-distance over color, gradient magnitude, gradient direction, and Laplacian channels
+* Weighted combination of all components
+* Orientation-aware comparison (handles rotated edges)
+
+The result is a **compatibility matrix** that stores the cost of matching any piece edge with another.
+
+---
+
+## Phase 2: Puzzle Assembly
+
+### 2×2 Solver (`2x2.py`)
+
+* Uses **brute-force permutation search** (4! = 24 possibilities)
+* Guarantees optimal solution
+* Used mainly for validation and benchmarking
+
+### 4×4 Solver (`4x4.py`)
+
+* Uses **best-buddy heuristics**
+* Greedy placement with neighborhood constraints
+* Segment-based refinement (connected components)
+* Optional swap-based local optimization
+
+### 8×8 Solver (`8x8.py`)
+
+* Same strategy as 4×4 with reduced iterations
+* Designed to balance accuracy and runtime
+* Fully heuristic due to combinatorial explosion
+
+---
+
+## Accuracy Evaluation
+
+**File:** `Compare.py`
+
+The reconstructed image is compared against the ground-truth image:
+
+1. Both images are divided into corresponding tiles.
+2. Absolute pixel difference is computed per tile.
+3. A similarity score is calculated and thresholded.
+4. Accuracy is reported as the percentage of correctly placed tiles.
+
+Thresholds are adjusted based on puzzle size (2×2, 4×4, 8×8).
+
+---
+
+## Visualization
+
+**File:** `visualizations.py`
+
+The visualization module produces:
+
+* Preprocessing step comparisons
+* Grid view of extracted pieces
+* Final assembled image
+* Side-by-side comparison with original image
+* Summary figures for all puzzle sizes
+
+These outputs help explain and justify the pipeline decisions.
+
+---
+
+## How to Run
+
+1. **Run preprocessing and segmentation**
+
+   ```bash
+   python Phase1.py
+   ```
+
+2. **Assemble puzzles**
+
+   ```bash
+   python 2x2.py
+   python 4x4.py
+   python 8x8.py
+   ```
+
+3. **Evaluate accuracy**
+
+   ```bash
+   python Compare.py
+   ```
+
+4. **Generate visualizations**
+
+   ```bash
+   python visualizations.py
+   ```
+
+---
+
+## Design Choices & Justification
+
+* LAB color space for perceptual consistency
+* Gradient-based descriptors for edge continuity
+* Best-buddy heuristic for scalable assembly
+* No ML models to strictly follow course rules
+* Modular design for debugging and evaluation
+
+---
+
+## Limitations
+
+* Assumes rectangular grid-based puzzles
+* Performance degrades for highly repetitive textures
+* 8×8 assembly is heuristic and not guaranteed optimal
+
+---
+
+## Conclusion
+
+This project demonstrates a complete, end-to-end **classical computer vision solution** for jigsaw puzzle assembly. It integrates preprocessing, feature extraction, geometric reasoning, heuristic optimization, evaluation, and visualization into a cohesive and reproducible system suitable for academic assess
+>>>>>>> 7aabc83 (Updating Readme file and Adding the dataset and output)
