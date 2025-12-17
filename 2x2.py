@@ -6,7 +6,7 @@ import re
 from itertools import permutations
 from collections import deque
 
-BASE_OUTPUT = r"D:\Gam3a\Junior\Fall 25\Image\Gravity Falls"
+BASE_OUTPUT = r"C:\Users\aliha\VSC code\Image"
 
 OUT_IMG = os.path.join(BASE_OUTPUT, "final_output")
 OUT_ASSEMBLED = os.path.join(BASE_OUTPUT, "assembled")

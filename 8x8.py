@@ -6,7 +6,7 @@ import os
 import glob
 import re
 
-BASE_OUTPUT = r"D:\Gam3a\Junior\Fall 25\Image\Gravity Falls"
+BASE_OUTPUT = r"C:\Users\aliha\VSC code\Image"
 OUT_IMG = os.path.join(BASE_OUTPUT, "final_output")
 OUT_ASSEMBLED = os.path.join(BASE_OUTPUT, "assembled", "8x8")
 
@@ -433,17 +433,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-
-
-
-
-
-
-
-
-
-
-
-
-
-

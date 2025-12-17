@@ -3,7 +3,7 @@ import numpy as np
 import os
 import glob
 
-BASE_OUTPUT = r"D:\Gam3a\Junior\Fall 25\Image\Gravity Falls"
+BASE_OUTPUT = r"C:\Users\aliha\VSC code\Image"
 
 DATASET = os.path.join(BASE_OUTPUT, "dataset", "Gravity Falls")
 
@@ -78,7 +78,6 @@ for folder in os.listdir(DATASET):
 
         pieceID = 1
         pieces_from_original = 0
-        pieces_from_preprocessed = 0
         for row in range(grid):
             for col in range(grid):
                 y1, y2 = row * tile_h, (row + 1) * tile_h

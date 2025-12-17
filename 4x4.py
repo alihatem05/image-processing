@@ -6,30 +6,13 @@ import os
 import glob
 import re
 
-BASE_OUTPUT = r"D:\Gam3a\Junior\Fall 25\Image\Gravity Falls"
+BASE_OUTPUT = r"C:\Users\aliha\VSC code\Image"
 OUT_IMG = os.path.join(BASE_OUTPUT, "final_output")
 OUT_ASSEMBLED = os.path.join(BASE_OUTPUT, "assembled", "4x4")
 
 os.makedirs(OUT_ASSEMBLED, exist_ok=True)
 
 _piece_re = re.compile(r"piece[_\-]?(\d+)\.\w+$", re.IGNORECASE)
-
-
-def preprocess_piece(img):
-    if len(img.shape) == 3:
-        gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
-    else:
-        gray = img.copy()
-    
-    blurred = cv2.GaussianBlur(gray, (3, 3), 0)
-    
-    laplacian = cv2.Laplacian(blurred, cv2.CV_16S, ksize=3)
-    laplacian_abs = cv2.convertScaleAbs(laplacian)
-    
-    final = cv2.addWeighted(blurred, 0.85, laplacian_abs, 0.15, 0)
-    
-    return final
-
 
 def read_pieces_sorted(piece_dir):
 

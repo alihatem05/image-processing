@@ -2,7 +2,7 @@ import cv2
 import os
 import numpy as np
 
-BASE_OUTPUT = r"D:\Gam3a\Junior\Fall 25\Image\Gravity Falls"
+BASE_OUTPUT = r"C:\Users\aliha\VSC code\Image"
 
 DATASET = os.path.join(BASE_OUTPUT, "dataset", "Gravity Falls")
 OUT_ASSEMBLED = os.path.join(BASE_OUTPUT, "assembled", "4x4")
@@ -63,7 +63,81 @@ def calc_accuracy(reconstructed, correct_path, n_tiles):
             match_count += 1
     
     accuracy = (match_count / (n_tiles ** 2)) * 100
+    
+    return accuracy
 
+
+def main():
+    if not os.path.exists(CORRECT_FOLDER):
+        print(f"[ERROR] Correct folder not found: {CORRECT_FOLDER}")
+        return
+    
+    print("=" * 60)
+    print("PUZZLE RECONSTRUCTION ACCURACY REPORT")
+    print("=" * 60)
+    
+    for grid_size, assembled_folder in PUZZLE_FOLDERS.items():
+        if not os.path.exists(assembled_folder):
+            print(f"\n[SKIP] {grid_size} folder not found: {assembled_folder}")
+            continue
+        
+        n_tiles = int(grid_size.split('x')[0])
+        print(f"\n{'=' * 60}")
+        print(f"{grid_size.upper()} PUZZLES (Grid: {n_tiles}x{n_tiles})")
+        print(f"{'=' * 60}")
+        
+        assembled_files = sorted([f for f in os.listdir(assembled_folder) if f.endswith('.png')])
+        
+        if not assembled_files:
+            print(f"  No assembled images found.")
+            continue
+        
+        total_accuracy = 0.0
+        count = 0
+        
+        for assembled_file in assembled_files:
+            # Extract base name (remove _assembled.png suffix)
+            base_name = assembled_file.replace('_assembled.png', '')
+            
+            # Find matching correct image
+            correct_path = None
+            for ext in ['.png', '.jpg', '.jpeg']:
+                potential_path = os.path.join(CORRECT_FOLDER, base_name + ext)
+                if os.path.exists(potential_path):
+                    correct_path = potential_path
+                    break
+            
+            if correct_path is None:
+                print(f"  [WARN] No correct image found for: {base_name}")
+                continue
+            
+            assembled_path = os.path.join(assembled_folder, assembled_file)
+            reconstructed = cv2.imread(assembled_path)
+            
+            if reconstructed is None:
+                print(f"  [WARN] Could not read: {assembled_file}")
+                continue
+            
+            accuracy = calc_accuracy(reconstructed, correct_path, n_tiles)
+            total_accuracy += accuracy
+            count += 1
+            
+            print(f"  {base_name:30s} -> Accuracy: {accuracy:6.2f}%")
+        
+        if count > 0:
+            avg_accuracy = total_accuracy / count
+            print(f"\n  Average Accuracy for {grid_size}: {avg_accuracy:.2f}%")
+            print(f"  Total Images: {count}")
+        else:
+            print(f"\n  No valid comparisons for {grid_size}")
+    
+    print("\n" + "=" * 60)
+    print("REPORT COMPLETE")
+    print("=" * 60)
+
+
+if __name__ == "__main__":
+    main()
 
 
 
