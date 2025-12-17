@@ -33,11 +33,6 @@ def preprocess_piece(img):
 
 def read_pieces_sorted(piece_dir):
 
-
-
-
-
-
     files = glob.glob(os.path.join(piece_dir, "*.png"))
     indexed = []
     for f in files:
@@ -415,19 +410,6 @@ def assemble_4x4(piece_dir, strip_width=8, seeds=5, shifter_iters=8):
 
 
 def main():
-
-
-
-
-
-
-
-
-
-
-
-
-
     folders = glob.glob(os.path.join(OUT_IMG, "puzzle_4x4", "*"))
 
     if not folders:

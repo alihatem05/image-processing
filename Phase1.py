@@ -2,30 +2,8 @@ import cv2
 import numpy as np
 import os
 import glob
-import time
-import json
 
-LOG_PATH = r"e:\Studying\Fall 25\CSE381\Project\Gravity Falls\.cursor\debug.log"
-
-def debug_log(location, message, data=None, hypothesis_id=None, run_id="initial"):
-    try:
-        os.makedirs(os.path.dirname(LOG_PATH), exist_ok=True)
-        log_entry = {
-            "sessionId": "debug-session",
-            "runId": run_id,
-            "timestamp": int(time.time() * 1000),
-            "location": location,
-            "message": message,
-            "data": data or {}
-        }
-        if hypothesis_id:
-            log_entry["hypothesisId"] = hypothesis_id
-        with open(LOG_PATH, "a", encoding="utf-8") as f:
-            f.write(json.dumps(log_entry) + "\n")
-    except Exception:
-        pass
-
-BASE_OUTPUT = r"E:\Studying\Fall 25\CSE381\Project\Gravity Falls"
+BASE_OUTPUT = r"D:\Gam3a\Junior\Fall 25\Image\Gravity Falls"
 
 DATASET = os.path.join(BASE_OUTPUT, "dataset", "Gravity Falls")
 
@@ -83,12 +61,6 @@ for folder in os.listdir(DATASET):
         os.makedirs(pre_out_dir, exist_ok=True)
 
         steps = preprocess_steps(img)
-        debug_log("Phase1.py:main", "Preprocessing computed", {
-            "image": img_basename,
-            "grid": grid,
-            "preprocessed_shape": steps["final"].shape,
-            "original_shape": img.shape
-        }, "A", "initial")
 
         cv2.imwrite(os.path.join(pre_out_dir, "1_gray.png"), steps["gray"])
         cv2.imwrite(os.path.join(pre_out_dir, "2_blur.png"), steps["blur"])
@@ -111,28 +83,11 @@ for folder in os.listdir(DATASET):
             for col in range(grid):
                 y1, y2 = row * tile_h, (row + 1) * tile_h
                 x1, x2 = col * tile_w, (col + 1) * tile_w
-                debug_log("Phase1.py:main", "Extracting piece", {
-                    "piece_id": pieceID,
-                    "from_source": "original",
-                    "coords": {"y1": y1, "y2": y2, "x1": x1, "x2": x2}
-                }, "A", "initial")
                 piece_img = img[y1:y2, x1:x2]
                 pieces_from_original += 1
-                debug_log("Phase1.py:main", "Piece extracted", {
-                    "piece_id": pieceID,
-                    "piece_shape": piece_img.shape,
-                    "source": "original_image"
-                }, "A", "initial")
                 out_path = os.path.join(image_out_dir, f"piece_{pieceID}.png")
                 cv2.imwrite(out_path, piece_img)
                 pieceID += 1
-        debug_log("Phase1.py:main", "All pieces saved", {
-            "image": img_basename,
-            "total_pieces": pieceID - 1,
-            "pieces_from_original": pieces_from_original,
-            "pieces_from_preprocessed": pieces_from_preprocessed,
-            "preprocessing_used": False
-        }, "A", "initial")
 
         print(f"[INFO] {pieceID-1} tiles saved for '{img_basename}' (grid: {grid}x{grid})")
         img_global_id += 1

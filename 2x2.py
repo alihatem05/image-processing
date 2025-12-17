@@ -3,8 +3,6 @@ import numpy as np
 import os
 import glob
 import re
-import json
-import time
 from itertools import permutations
 from collections import deque
 
@@ -17,25 +15,6 @@ os.makedirs(OUT_ASSEMBLED, exist_ok=True)
 os.makedirs(os.path.join(OUT_ASSEMBLED, "2x2"), exist_ok=True)
 
 _piece_re = re.compile(r"piece[_\-]?(\d+)\.\w+$", re.IGNORECASE)
-LOG_PATH = r"D:\Gam3a\Junior\Fall 25\Image\Gravity Falls\.cursor"
-
-
-def debug_log(location, message, data=None, hypothesis_id=None, run_id="initial"):
-    try:
-        log_entry = {
-            "sessionId": "debug-session",
-            "runId": run_id,
-            "timestamp": int(time.time() * 1000),
-            "location": location,
-            "message": message,
-            "data": data or {}
-        }
-        if hypothesis_id:
-            log_entry["hypothesisId"] = hypothesis_id
-        with open(LOG_PATH, "a", encoding="utf-8") as f:
-            f.write(json.dumps(log_entry) + "\n")
-    except Exception:
-        pass
 
 
 def read_pieces_sorted(piece_dir):
