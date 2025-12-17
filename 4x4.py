@@ -6,7 +6,7 @@ import os
 import glob
 import re
 
-BASE_OUTPUT = r"C:\Users\aliha\VSC code\Image"
+BASE_OUTPUT = "."
 OUT_IMG = os.path.join(BASE_OUTPUT, "final_output")
 OUT_ASSEMBLED = os.path.join(BASE_OUTPUT, "assembled", "4x4")
 

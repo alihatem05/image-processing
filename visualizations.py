@@ -6,7 +6,7 @@ import re
 import matplotlib.pyplot as plt
 from matplotlib.gridspec import GridSpec, GridSpecFromSubplotSpec
 
-BASE_OUTPUT = r"D:\Gam3a\Junior\Fall 25\Image\Gravity Falls"
+BASE_OUTPUT = "."
 OUT_IMG = os.path.join(BASE_OUTPUT, "final_output")
 OUT_ASSEMBLED = os.path.join(BASE_OUTPUT, "assembled")
 OUT_PRE = os.path.join(BASE_OUTPUT, "preprocess")

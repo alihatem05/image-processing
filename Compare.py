@@ -2,7 +2,7 @@ import cv2
 import os
 import numpy as np
 
-BASE_OUTPUT = r"C:\Users\aliha\VSC code\Image"
+BASE_OUTPUT = "."
 
 DATASET = os.path.join(BASE_OUTPUT, "dataset", "Gravity Falls")
 OUT_ASSEMBLED = os.path.join(BASE_OUTPUT, "assembled", "4x4")
